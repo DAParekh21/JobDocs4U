@@ -1,0 +1,12 @@
+{
+  "name": "jobdocs4u",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm -w -C apps/api dev"
+  }
+}
