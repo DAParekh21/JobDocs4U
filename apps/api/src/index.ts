@@ -1,3 +1,4 @@
+import "./env";
 import express from 'express';
 import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';

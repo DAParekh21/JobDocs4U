@@ -7,6 +7,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm -w -C apps/api dev"
+    "dev": "pnpm --filter ./apps/api dev"
   }
 }

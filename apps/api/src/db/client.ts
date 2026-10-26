@@ -8,8 +8,20 @@ export async function getDb() {
   const databaseUrl = process.env.DATABASE_URL;
   if (!databaseUrl) throw new Error('DATABASE_URL not set');
 
-  // mysql2 connection using connection string
-  const pool = mysql.createPool(databaseUrl);
+  const url = new URL(databaseUrl);
+  const useSsl = process.env.DB_SSL !== 'false' && url.hostname !== 'localhost';
+
+  const pool = mysql.createPool({
+    host: url.hostname,
+    port: Number(url.port) || 3306,
+    user: decodeURIComponent(url.username),
+    password: decodeURIComponent(url.password),
+    database: url.pathname.replace('/', ''),
+    ssl: useSsl ? { minVersion: 'TLSv1.2', rejectUnauthorized: true } : undefined,
+    waitForConnections: true,
+    connectionLimit: 10,
+  });
+
   db = drizzle(pool);
   return db;
 }
